@@ -2,7 +2,7 @@
 /*
 Author: 2MB Solutions
 Author URI: http://2mb.solutions/
-Description: The premier anti-spam plugin from 2mb. Block comment bots, registration bots, spam of all sorts, and verify the owner of email addresses.
+Description: The premier anti-spam plugin from 2mb. Block comment bots, registration bots, and spam of all sorts.
 Plugin Name: 2MB All-in-One Anti-spam
 Plugin URI: TODO
 Version: 0.0.1 alpha
