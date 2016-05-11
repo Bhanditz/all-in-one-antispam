@@ -297,6 +297,9 @@ function twomb_antispam_init_settings() {
     register_setting('twomb-antispam-settings', '2mb-antispam-do-blogspamnet', 'twomb_antispam_do_blogspamnet_sanitize');
     register_setting('twomb-antispam-settings', '2mb-antispam-do-akismet', 'twomb_antispam_do_akismet_sanitize');
     register_setting('twomb-antispam-settings', '2mb-antispam-akismet-key', 'twomb_antispam_akismet_key_sanitize');
+    register_setting('twomb-antispam-settings', '2mb-antispam-do-botscout-comments', 'twomb_antispam_do_botscout_comments_sanitize');
+    register_setting('twomb-antispam-settings', '2mb-antispam-do-botscout-registration', 'twomb_antispam_do_botscout_registration_sanitize');
+    register_setting('twomb-antispam-settings', '2mb-antispam-botscout-key', 'twomb_antispam_botscout_key_sanitize');
     add_settings_field('2mb-antispam-do-checkbox-comments', 'Should there be a bot-stopping checkbox on comment forms?', 'twomb_antispam_do_checkbox_comments_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
     add_settings_field('2mb-antispam-id-comments', 'Should there be a bot-stopping random id on comment forms?', 'twomb_antispam_do_id_comments_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
 //    add_settings_field('2mb-antispam-do-honeypot-comments', 'Should there be a bot-stopping honeypot on comment forms?', 'twomb_antispam_do_honeypot_comments_print', 'twomb-antispam-settings', 'twomb-antispam-settings');//Not yet implemented.
@@ -306,6 +309,9 @@ function twomb_antispam_init_settings() {
     add_settings_field('2mb-antispam-do-blogspamnet', 'Should comments be checked against the blogspam.net API?', 'twomb_antispam_do_blogspamnet_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
     add_settings_field('2mb-antispam-do-akismet', 'Should comments be checked against the akismet antispam API?', 'twomb_antispam_do_akismet_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
     add_settings_field('2mb-antispam-akismet-key', 'Enter your key for the akismet API here:', 'twomb_antispam_akismet_key_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
+    add_settings_field('2mb-antispam-do-botscout-comments', 'Should comments be checked against the botscout API?', 'twomb_antispam_do_botscout_comments_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
+    add_settings_field('2mb-antispam-do-botscout-registration', 'Should registrations be checked against the botscout API?', 'twomb_antispam_do_botscout_registration_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
+    add_settings_field('2mb-antispam-botscout-key', 'Enter your botscout API key here.', 'twomb_antispam_botscout_key_print', 'twomb-antispam-settings', 'twomb-antispam-settings');
 }
 
 function twomb_antispam_do_checkbox_comments_sanitize($data) {
@@ -370,6 +376,24 @@ function twomb_antispam_akismet_key_sanitize($data) {
     return sanitize_text_field($data);
 }
 
+function twomb_antispam_do_botscout_comments_sanitize($data) {
+    if($data == "true")
+        return 1;
+    else
+        return 0;
+}
+
+function twomb_antispam_do_botscout_registration_sanitize($data) {
+    if($data == "true")
+        return 1;
+    else
+        return 0;
+}
+
+function twomb_antispam_botscout_key_sanitize($data) {
+    return sanitize_text_field($data);
+}
+
 function twomb_antispam_do_checkbox_comments_print() {
     ?>
     <input name="2mb-antispam-do-checkbox-comments" id="2mb-antispam-do-checkbox-comments" type="checkbox" value="true"<?php echo ((get_option('2mb-antispam-do-checkbox-comments') == 1)?' checked="checked">':'>');
@@ -418,6 +442,23 @@ function twomb_antispam_akismet_key_print() {
     <?php
 }
 
+function twomb_antispam_do_botscout_comments_print() {
+    ?>
+    <input name="2mb-antispam-do-botscout-comments" id="2mb-antispam-do-botscout-comments" type="checkbox" value="true"<?php echo ((get_option('2mb-antispam-do-botscout-comments') == 1)?' checked="checked">':'>');
+}
+
+function twomb_antispam_do_botscout_registration_print() {
+    ?>
+    <input name="2mb-antispam-do-botscout-registration" id="2mb-antispam-do-botscout-registration" type="checkbox" value="true"<?php echo ((get_option('2mb-antispam-do-botscout-registration') == 1)?' checked="checked">':'>');
+}
+
+function twomb_antispam_botscout_key_print()
+{
+    ?>
+    <input name="2mb-antispam-botscout-key" id="2mb-antispam-botscout-key" type="text" value="<?php echo get_option('2mb-antispam-botscout-key');?>">
+<?php
+}
+
 function twomb_antispam_print_section() {
 ?>
 Please enter your settings below, and click save to save your changes. Note that it may take some experimentation to find which settings work best on your site.
@@ -434,5 +475,8 @@ function twomb_antispam_activate() {
     add_option('2mb-antispam-do-blogspamnet', 0);
     add_option('2mb-antispam-do-akismet', 0);
     add_option('2mb-antispam-akismet-key', '');
+    add_option('2mb-antispam-do-botscout-comments', 0);
+    add_option('2mb-antispam-do-botscout-registration', 0);
+    add_option('2mb-antispam-botscout-key', '');
 }
 ?>
